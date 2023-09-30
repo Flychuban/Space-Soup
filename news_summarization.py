@@ -1,6 +1,8 @@
 import requests
 from transformers import pipeline
 from gtts import gTTS #used for text-to-speech
+from pydub import AudioSegment
+from pydub.effects import speedup
 from bs4 import BeautifulSoup
 import re
 
@@ -87,14 +89,38 @@ def summarize_all_chunks(chunks, summarizer):
     return summarized_texts
 
 def merge_texts_into_space_report(summarized_texts):
+    merge_phrases = ["Now, let's shift our focus to: ",
+    "Moving on to another intriguing development in space exploration:",
+    "Switching gears, let's delve into: ",
+    "Turning our attention to a different aspect of space science: ",
+    "Next up on our cosmic journey: ",
+    "Shifting our gaze to a separate celestial event: ",
+    "Now, let's explore another celestial headline: ",
+    "Transitioning to a different corner of the universe: ",
+    "Moving forward, let's discuss: ",
+    "Steering our spacecraft of knowledge toward: ",
+    "Now, in a different part of the cosmos: ",
+    "Switching our telescopes to a new cosmic phenomenon: ",
+    "Changing our trajectory to focus on: ",
+    "Stepping into another dimension of space news: ",
+    "Now, as we orbit to the next topic: ",
+    "Zooming in on a separate celestial occurrence: ",
+    "Leaving our previous topic behind, let's explore: ",
+    "Pivoting to a fresh cosmic revelation: ",
+    "Our journey through the universe continues with: ",
+    "Now, let's set our sights on: "]
+
     all_summarized_text = ""
-    for summarized_text in summarized_texts:
-        all_summarized_text += summarized_text
+    for i, summarized_text in enumerate(summarized_texts):
+        all_summarized_text = all_summarized_text + "... " + f"{merge_phrases[i%(len(merge_phrases))]}" + summarized_text
     return all_summarized_text
 
 def make_mp3_text_to_speech(all_summarized_text, filename):
     tts = gTTS(text=all_summarized_text, lang='en')
     tts.save(filename)
+    audio = AudioSegment.from_mp3(filename)
+    new_file = speedup(audio,1.2,150)
+    new_file.export(filename, format="mp3")
 
 def main():
     # Load summarization model from HuggingFace
