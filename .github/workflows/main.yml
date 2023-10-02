@@ -1,0 +1,37 @@
+name: Weekly Summarization
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Run summarization script
+        run: |
+          python news_summarization.py
+          # Add commands to deploy the resulting MP3 to Render
+
+      - name: Install Render CLI
+        run: curl -sSL https://render.com/deploy | sh
+
+      - name: Deploy MP3 to Render
+        run: |
+          RENDER_PROJECT_ID=srv-ckdhc5sgonuc73c0c3a0
+          RENDER_SERVICE_ID=ckdhc5sgonuc73c0c3a0
+
+          render set --project $RENDER_PROJECT_ID --service $RENDER_SERVICE_ID
+          cd generated_audios
+          latest_mp3=$(ls -t *.mp3 | head -1)
+
+          render up -f "$latest_mp3"
