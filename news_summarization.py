@@ -5,6 +5,7 @@ from pydub import AudioSegment
 from pydub.effects import speedup
 from bs4 import BeautifulSoup
 import re
+import datetime
 
 def search_url_space_news(URL):
     r = requests.get(URL)
@@ -113,6 +114,9 @@ def merge_texts_into_space_report(summarized_texts):
     all_summarized_text = ""
     for i, summarized_text in enumerate(summarized_texts):
         all_summarized_text = all_summarized_text + "... " + f"{merge_phrases[i%(len(merge_phrases))]}" + summarized_text
+    
+    # Thanks to sources
+    all_summarized_text = all_summarized_text + " Thanks to Space.com for the space articles."
     return all_summarized_text
 
 def make_mp3_text_to_speech(all_summarized_text, filename):
@@ -150,7 +154,7 @@ def main():
     all_summarized_texts = merge_texts_into_space_report(summarized_texts)
     
     # Text-to-speech for space report
-    filename = "space_news_report.mp3"
+    filename = datetime.datetime.now().strftime("%Y%m%d-%H%M") + ".mp3"
     make_mp3_text_to_speech(filename)
       
     
