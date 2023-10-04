@@ -2,7 +2,7 @@ name: Weekly Summarization and Website Deployment
 
 on:
   schedule:
-    - cron: '0 12 * * *'
+    - cron: '8 21 * * *'
   push:
     branches:
       - main 
@@ -39,6 +39,10 @@ jobs:
 
           render up -f "$latest_mp3"
 
+      - name: Download Latest Audio
+        run: |
+          python get_newest_audio.py
+
       - name: Deploy Website to Render
         run: |
           RENDER_PROJECT_ID=srv-ckdhc5sgonuc73c0c3a0
@@ -49,19 +53,4 @@ jobs:
           cd web_page
           render up
 
-  download_audio:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.x
-
-      - name: Download Latest Audio
-        run: |
-          python get_newest_audio.py
 
