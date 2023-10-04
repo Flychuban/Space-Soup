@@ -46,4 +46,5 @@ jobs:
 
           render set --project $RENDER_PROJECT_ID --service $RENDER_SERVICE_ID
           
+          cd web_page
           render up
