@@ -2,7 +2,7 @@ name: Weekly Summarization and Website Deployment
 
 on:
   schedule:
-    - cron: '36 22 * * *'  # Schedule to run at 9:15 PM UTC
+    - cron: '44 22 * * *'  # Schedule to run at 9:15 PM UTC
   push:
     branches:
       - main 
@@ -35,6 +35,7 @@ jobs:
       - name: Install Keras
         run: |
           pip install keras
+          pip install --upgrade git+https://github.com/huggingface/transformers.git
 
       - name: Run summarization script
         run: python news_summarization.py

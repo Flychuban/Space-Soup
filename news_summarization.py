@@ -6,6 +6,8 @@ from pydub.effects import speedup
 from bs4 import BeautifulSoup
 import re
 import datetime
+import tensorflow
+from tensorflow.python.keras.engine import data_adapter
 
 def search_url_space_news(URL):
     r = requests.get(URL)
