@@ -2,7 +2,7 @@ name: Weekly Summarization and Website Deployment
 
 on:
   schedule:
-    - cron: '5 22 * * *'  # Schedule to run at 9:15 PM UTC
+    - cron: '8 21 * * *'  # Schedule to run at 9:15 PM UTC
   push:
     branches:
       - main 
@@ -23,6 +23,14 @@ jobs:
       - name: Install Python Dependencies
         run: |
           pip install -r requirements.txt  # Adjust as needed based on your project's requirements
+
+      - name: Install PyTorch
+        run: |
+          pip install torch
+
+      - name: Install TensorFlow
+        run: |
+          pip install tensorflow
 
       - name: Run summarization script
         run: python news_summarization.py
