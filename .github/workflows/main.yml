@@ -2,7 +2,7 @@ name: Weekly Summarization and Website Deployment
 
 on:
   schedule:
-    - cron: '45 21 * * *'
+    - cron: '51 21 * * *'  # Schedule to run at 9:15 PM UTC
   push:
     branches:
       - main 
@@ -22,7 +22,7 @@ jobs:
 
       - name: Run summarization script
         run: |
-          python ../news_summarization.py
+          python news_summarization.py
 
       - name: Install Render CLI
         run: curl -sSL https://render.com/deploy | sh
@@ -33,7 +33,7 @@ jobs:
           RENDER_SERVICE_ID=ckdhc5sgonuc73c0c3a0
 
           render set --project $RENDER_PROJECT_ID --service $RENDER_SERVICE_ID
-          cd ../generated_audios
+          cd generated_audios
 
           latest_mp3=$(ls -t *.mp3 | head -1)
 
@@ -41,7 +41,7 @@ jobs:
 
       - name: Download Latest Audio
         run: |
-          python ../get_newest_audio.py
+          python get_newest_audio.py
 
       - name: Deploy Website to Render
         run: |
@@ -50,7 +50,7 @@ jobs:
 
           render set --project $RENDER_PROJECT_ID --service $RENDER_SERVICE_ID
           
-          cd ../web_page
+          cd web_page
           render up
 
 
