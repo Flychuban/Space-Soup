@@ -2,7 +2,7 @@ name: Weekly Summarization and Website Deployment
 
 on:
   schedule:
-    - cron: '27 22 * * *'  # Schedule to run at 9:15 PM UTC
+    - cron: '36 22 * * *'  # Schedule to run at 9:15 PM UTC
   push:
     branches:
       - main 
@@ -31,6 +31,9 @@ jobs:
       - name: Install TensorFlow
         run: |
           pip install tensorflow
+      
+      - name: Install Keras
+        run: |
           pip install keras
 
       - name: Run summarization script
