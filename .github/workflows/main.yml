@@ -2,7 +2,7 @@ name: Weekly Summarization and Website Deployment
 
 on:
   schedule:
-    - cron: '51 21 * * *'  # Schedule to run at 9:15 PM UTC
+    - cron: '5 22 * * *'  # Schedule to run at 9:15 PM UTC
   push:
     branches:
       - main 
@@ -20,9 +20,12 @@ jobs:
         with:
           python-version: 3.x
 
-      - name: Run summarization script
+      - name: Install Python Dependencies
         run: |
-          python news_summarization.py
+          pip install -r requirements.txt  # Adjust as needed based on your project's requirements
+
+      - name: Run summarization script
+        run: python news_summarization.py
 
       - name: Install Render CLI
         run: curl -sSL https://render.com/deploy | sh
@@ -52,5 +55,3 @@ jobs:
           
           cd web_page
           render up
-
-
