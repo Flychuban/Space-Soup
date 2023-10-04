@@ -1,8 +1,11 @@
-name: Weekly Summarization
+name: Weekly Summarization and Website Deployment
 
 on:
   schedule:
     - cron: '0 0 * * 0'
+  push:
+    branches:
+      - main 
 
 jobs:
   build:
@@ -19,19 +22,28 @@ jobs:
 
       - name: Run summarization script
         run: |
-          python news_summarization.py
-          # Add commands to deploy the resulting MP3 to Render
+          python summarization_script.py
 
       - name: Install Render CLI
         run: curl -sSL https://render.com/deploy | sh
 
-      - name: Deploy MP3 to Render
+      - name: Deploy Most Recent MP3 to Render
         run: |
           RENDER_PROJECT_ID=srv-ckdhc5sgonuc73c0c3a0
           RENDER_SERVICE_ID=ckdhc5sgonuc73c0c3a0
 
           render set --project $RENDER_PROJECT_ID --service $RENDER_SERVICE_ID
           cd generated_audios
+
           latest_mp3=$(ls -t *.mp3 | head -1)
 
           render up -f "$latest_mp3"
+
+      - name: Deploy Website to Render
+        run: |
+          RENDER_PROJECT_ID=srv-ckdhc5sgonuc73c0c3a0
+          RENDER_SERVICE_ID=ckdhc5sgonuc73c0c3a0
+
+          render set --project $RENDER_PROJECT_ID --service $RENDER_SERVICE_ID
+          
+          render up
