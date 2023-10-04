@@ -86,7 +86,7 @@ def summarize_all_chunks(chunks, summarizer):
     summarized_texts = []
     for article_chunks in chunks:
         article_text = []
-        result = summarizer(article_chunks, max_length=80, min_length=30, do_sample=False)
+        result = summarizer(article_chunks, min_length = int(0.1 * len(article_chunks)), max_length = int(0.2 * len(article_chunks)))
         article_text = ' '.join([summ['summary_text'] for summ in result])
         summarized_texts.append(article_text)
     return summarized_texts
