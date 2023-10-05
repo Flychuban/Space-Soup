@@ -2,7 +2,7 @@ name: Weekly Summarization and Website Deployment
 
 on:
   schedule:
-    - cron: '20 22 * * *'  # Schedule to run at 9:15 PM UTC
+    - cron: '45 22 * * *'  # Schedule to run at 9:15 PM UTC
   push:
     branches:
       - main 
@@ -46,7 +46,10 @@ jobs:
         run: python news_summarization.py
 
       - name: Install Render CLI
-        run: curl -sSL https://render.com/deploy | sh
+        run: |
+          wget https://render.com/deploy -O render_install.sh
+          chmod +x render_install.sh
+          ./render_install.sh
 
       - name: Deploy Most Recent MP3 to Render
         run: |
