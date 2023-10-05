@@ -173,7 +173,7 @@ def main():
     
     # Text-to-speech for space report
     filename = "generated_audios/space_news_summary_" + datetime.datetime.now().strftime("%Y%m%d") + ".mp3"
-    make_mp3_text_to_speech(filename)
+    make_mp3_text_to_speech(all_summarized_texts, filename)
       
     
 
