@@ -165,7 +165,7 @@ def main():
     joined_chunks = join_chunks_to_sentences(chunks)
     
     # Summarize all chunks and convert them into text
-    summarized_texts = summarize_all_chunks(chunks, summarizer)
+    summarized_texts = summarize_all_chunks(joined_chunks, summarizer)
     
     # Merge all summarized texts into one space report
     all_summarized_texts = merge_texts_into_space_report(summarized_texts)
