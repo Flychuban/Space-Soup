@@ -78,15 +78,27 @@ def split_texts_to_chunks(sentences):
                     current_chunk += 1
                     chunks[i].append(sentence.split(' '))
             else:
-                print(current_chunk)
                 chunks[i].append(sentence.split(' '))
+    
     return chunks
+
+def join_chunks_to_sentences(chunks):
+    joined_chunks = []
+
+    for i, article_chunks in enumerate(chunks):
+        article_text = []
+
+        for chunk_id in range(len(article_chunks)):
+            article_text.append(' '.join(article_chunks[chunk_id]))
+
+        joined_chunks.append(article_text)
+
 
 def summarize_all_chunks(chunks, summarizer):
     summarized_texts = []
     for article_chunks in chunks:
         article_text = []
-        result = summarizer(article_chunks, min_length = 50, max_length = 120, do_sample=False)
+        result = summarizer(article_chunks, min_length = 30, max_length = 120, do_sample=False)
         article_text = ' '.join([summ['summary_text'] for summ in result])
         summarized_texts.append(article_text)
     return summarized_texts
@@ -148,6 +160,9 @@ def main():
     
     # Split text to chunks for easier text manipulation
     chunks = split_texts_to_chunks(sentences)
+    
+    # Join chunks to sentences
+    joined_chunks = join_chunks_to_sentences(chunks)
     
     # Summarize all chunks and convert them into text
     summarized_texts = summarize_all_chunks(chunks, summarizer)
