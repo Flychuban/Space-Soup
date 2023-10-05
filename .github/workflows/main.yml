@@ -2,7 +2,7 @@ name: Weekly Summarization and Website Deployment
 
 on:
   schedule:
-    - cron: '40 21 * * *'  # Schedule to run at 9:15 PM UTC
+    - cron: '48 21 * * *'  # Schedule to run at 9:15 PM UTC
   push:
     branches:
       - main 

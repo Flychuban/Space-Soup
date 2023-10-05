@@ -92,6 +92,7 @@ def join_chunks_to_sentences(chunks):
             article_text.append(' '.join(article_chunks[chunk_id]))
 
         joined_chunks.append(article_text)
+    return joined_chunks
 
 
 def summarize_all_chunks(chunks, summarizer):
