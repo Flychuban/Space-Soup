@@ -67,7 +67,7 @@ jobs:
           cd generated_audios
           latest_mp3=$(ls -t *.mp3 | head -1)
           echo "Latest MP3 file: $latest_mp3"
-          echo "::set-env name=LATEST_MP3::$latest_mp3"  # Set environment variable
+          echo "LATEST_MP3=$latest_mp3" >> $GITHUB_ENV  # Set environment variable using environment file
 
 
       - name: Deploy Most Recent MP3 to Render
