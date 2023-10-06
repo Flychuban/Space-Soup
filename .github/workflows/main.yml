@@ -57,8 +57,10 @@ jobs:
 
       - name: Set Render Environment Variables
         run: |
-          export RENDER_PROJECT_ID=srv-ckdhc5sgonuc73c0c3a0
-          export RENDER_SERVICE_ID=ckdhc5sgonuc73c0c3a0
+          export SITE_PROJECT_ID=srv-ckdhc5sgonuc73c0c3a0
+          export SITE_SERVICE_ID=ckdhc5sgonuc73c0c3a0
+          export AUDIOS_PROJECT_ID=srv-ckg5av6afg7c73eu6400
+          export AUDIOS_SERVICE_ID=dep-ckg5aveafg7c73eu6490
       
       - name: Get Latest MP3
         run: |
@@ -68,8 +70,7 @@ jobs:
 
       - name: Deploy Most Recent MP3 to Render
         run: |
-
-          render set --project $RENDER_PROJECT_ID --service $RENDER_SERVICE_ID
+          render set --project $AUDIOS_PROJECT_ID --service $AUDIOS_SERVICE_ID
           render up -f "$latest_mp3"
 
       - name: Download Latest Audio
@@ -78,6 +79,6 @@ jobs:
 
       - name: Deploy Website to Render
         run: |
-          render set --project $RENDER_PROJECT_ID --service $RENDER_SERVICE_ID      
+          render set --project $SITE_PROJECT_ID --service $SITE_SERVICE_ID      
           cd web_page
           render up
