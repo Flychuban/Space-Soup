@@ -51,7 +51,10 @@ jobs:
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
-          curl "$deploy_url" | sh
+          curl "$deploy_url"
+      
+      - name: Verify Render CLI Installation
+        run: render --version
 
       - name: Set Render Environment Variables
         run: |
