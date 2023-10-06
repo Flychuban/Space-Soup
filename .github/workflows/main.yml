@@ -45,17 +45,12 @@ jobs:
       - name: Run summarization script
         run: python news_summarization.py
 
-      - name: Install Render CLI
+      - name: Install Render CLI, Verify Installation, and Set Environment Variables
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
-          curl "$deploy_url"
-      
-      - name: Verify Render CLI Installation
-        run: render --version
-
-      - name: Set Render Environment Variables
-        run: |
+          curl -sSL "$deploy_url" | sh
+          render --version
           export RENDER_PROJECT_ID=srv-ckdhc5sgonuc73c0c3a0
           export RENDER_SERVICE_ID=ckdhc5sgonuc73c0c3a0
       
@@ -67,7 +62,6 @@ jobs:
 
       - name: Deploy Most Recent MP3 to Render
         run: |
-
           render set --project $RENDER_PROJECT_ID --service $RENDER_SERVICE_ID
           render up -f "$latest_mp3"
 
