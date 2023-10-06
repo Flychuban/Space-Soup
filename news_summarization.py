@@ -78,15 +78,28 @@ def split_texts_to_chunks(sentences):
                     current_chunk += 1
                     chunks[i].append(sentence.split(' '))
             else:
-                print(current_chunk)
                 chunks[i].append(sentence.split(' '))
+    
     return chunks
+
+def join_chunks_to_sentences(chunks):
+    joined_chunks = []
+
+    for i, article_chunks in enumerate(chunks):
+        article_text = []
+
+        for chunk_id in range(len(article_chunks)):
+            article_text.append(' '.join(article_chunks[chunk_id]))
+
+        joined_chunks.append(article_text)
+    return joined_chunks
+
 
 def summarize_all_chunks(chunks, summarizer):
     summarized_texts = []
     for article_chunks in chunks:
         article_text = []
-        result = summarizer(article_chunks, min_length = int(0.1 * len(article_chunks)), max_length = int(0.2 * len(article_chunks)))
+        result = summarizer(article_chunks, min_length = 30, max_length = 120, do_sample=False)
         article_text = ' '.join([summ['summary_text'] for summ in result])
         summarized_texts.append(article_text)
     return summarized_texts
@@ -149,15 +162,18 @@ def main():
     # Split text to chunks for easier text manipulation
     chunks = split_texts_to_chunks(sentences)
     
+    # Join chunks to sentences
+    joined_chunks = join_chunks_to_sentences(chunks)
+    
     # Summarize all chunks and convert them into text
-    summarized_texts = summarize_all_chunks(chunks, summarizer)
+    summarized_texts = summarize_all_chunks(joined_chunks, summarizer)
     
     # Merge all summarized texts into one space report
     all_summarized_texts = merge_texts_into_space_report(summarized_texts)
     
     # Text-to-speech for space report
     filename = "generated_audios/space_news_summary_" + datetime.datetime.now().strftime("%Y%m%d") + ".mp3"
-    make_mp3_text_to_speech(filename)
+    make_mp3_text_to_speech(all_summarized_texts, filename)
       
     
 
