@@ -2,7 +2,7 @@ name: Weekly Summarization and Website Deployment
 
 on:
   schedule:
-    - cron: '38 23 * * *'  # Schedule to run at 9:15 PM UTC
+    - cron: '56 8 * * *'  # Schedule to run at 9:15 PM UTC
   push:
     branches:
       - main 
@@ -53,16 +53,21 @@ jobs:
         run: |
           curl "$deploy_url"
 
+      - name: Set Render Environment Variables
+        run: |
+          export RENDER_PROJECT_ID=srv-ckdhc5sgonuc73c0c3a0
+          export RENDER_SERVICE_ID=ckdhc5sgonuc73c0c3a0
+      
+      - name: Get Latest MP3
+        run: |
+          cd generated_audios
+          latest_mp3=$(ls -t *.mp3 | head -1)
+          echo "Latest MP3 file: $latest_mp3"
+
       - name: Deploy Most Recent MP3 to Render
         run: |
-          RENDER_PROJECT_ID=srv-ckdhc5sgonuc73c0c3a0
-          RENDER_SERVICE_ID=ckdhc5sgonuc73c0c3a0
 
           render set --project $RENDER_PROJECT_ID --service $RENDER_SERVICE_ID
-          cd generated_audios
-
-          latest_mp3=$(ls -t *.mp3 | head -1)
-
           render up -f "$latest_mp3"
 
       - name: Download Latest Audio
@@ -71,10 +76,6 @@ jobs:
 
       - name: Deploy Website to Render
         run: |
-          RENDER_PROJECT_ID=srv-ckdhc5sgonuc73c0c3a0
-          RENDER_SERVICE_ID=ckdhc5sgonuc73c0c3a0
-
-          render set --project $RENDER_PROJECT_ID --service $RENDER_SERVICE_ID
-          
+          render set --project $RENDER_PROJECT_ID --service $RENDER_SERVICE_ID      
           cd web_page
           render up
