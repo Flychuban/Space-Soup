@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import re
 
 # Replace with your Render service details
-service_name = "generated_audio_files"
+service_name = "generated-audio-files"
 
 # Define the base URL for your Render service
 base_url = f"https://{service_name}.onrender.com/"
