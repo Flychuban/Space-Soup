@@ -47,7 +47,8 @@ jobs:
 
       - name: Install Render CLI
         run: |
-          curl -o render https://render.com/linux/render
+          CLI_URL="https://github.com/render-oss/render-cli/releases/download/v0.1.8/render-linux-x86_64"
+          curl -o render "$CLI_URL"
           chmod +x render
           sudo mv render /usr/local/bin/
       
