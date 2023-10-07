@@ -64,7 +64,7 @@ def add_eos_symbol(articles):
     return sentences
 
 def split_texts_to_chunks(sentences):
-    max_tokens_chunk = 500
+    max_tokens_chunk = 350
     chunks = []
 
     for i, article_sentences in enumerate(sentences):
