@@ -72,10 +72,10 @@ jobs:
 
       - name: Deploy Most Recent MP3 to Render
         run: |
-          cd generated_audios
+          # cd generated_audios
           render set --project $AUDIOS_PROJECT_ID --service $AUDIOS_SERVICE_ID
           echo "Latest MP3 file: $LATEST_MP3"
-          render up -f "$LATEST_MP3"
+          render up "$LATEST_MP3"
 
       - name: Download Latest Audio
         run: |
