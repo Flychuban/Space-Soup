@@ -140,6 +140,7 @@ def make_mp3_text_to_speech(all_summarized_text, filename):
     audio = AudioSegment.from_mp3(filename)
     new_file = speedup(audio,1.2,150)
     new_file.export(filename, format="mp3")
+    print("Generated audio file")
 
 def main():
     # Load summarization model from HuggingFace
