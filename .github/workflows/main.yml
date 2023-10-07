@@ -57,17 +57,15 @@ jobs:
 
       - name: Set Render Environment Variables
         run: |
-          export SITE_PROJECT_ID=srv-ckdhc5sgonuc73c0c3a0
-          export SITE_SERVICE_ID=ckdhc5sgonuc73c0c3a0
+          export SITE_PROJECT_ID= srv-ckgso1kldqrs73f58rrg
+          export SITE_SERVICE_ID=ckgso1kldqrs73f58rrg
           export AUDIOS_PROJECT_ID=srv-ckg5av6afg7c73eu6400
           export AUDIOS_SERVICE_ID=dep-ckg5aveafg7c73eu6490
       
       - name: Get Latest MP3
         run: |
           cd ./generated_audios
-          latest_mp3=$(realpath $(ls -t *.mp3 | head -1))
-          echo "Latest MP3 file: $latest_mp3"
-          echo "LATEST_MP3=$latest_mp3" >> $GITHUB_ENV  # Set environment variable using environment file
+          run: echo "LATEST_MP3=generated_audio.mp3" >> $GITHUB_ENV
 
 
       - name: Deploy Most Recent MP3 to Render
@@ -86,8 +84,9 @@ jobs:
         run: |
           python get_newest_audio.py
 
-      - name: Deploy Website to Render
+
+      - name: Deploy Flask App to Render
         run: |
-          render set --project $SITE_PROJECT_ID --service $SITE_SERVICE_ID      
-          cd web_page
-          render up
+          # Assuming your Flask app file is named app.py
+          render set --project $SITE_PROJECT_ID --service $SITE_SERVICE_ID
+          render up -n your-flask-project/app.py -p website -t website/templates -s website/static
