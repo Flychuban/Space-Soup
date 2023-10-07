@@ -29,21 +29,21 @@ jobs:
         run: |
           pip install -r requirements.txt  # Adjust as needed based on your project's requirements
 
-      - name: Install PyTorch
-        run: |
-          pip install torch
+      # - name: Install PyTorch
+      #   run: |
+      #     pip install torch
 
-      - name: Install TensorFlow
-        run: |
-          pip install tensorflow
+      # - name: Install TensorFlow
+      #   run: |
+      #     pip install tensorflow
       
-      - name: Install Keras
-        run: |
-          pip install keras
-          pip install --upgrade git+https://github.com/huggingface/transformers.git
+      # - name: Install Keras
+      #   run: |
+      #     pip install keras
+      #     pip install --upgrade git+https://github.com/huggingface/transformers.git
 
-      - name: Run summarization script
-        run: python news_summarization.py
+      # - name: Run summarization script
+      #   run: python news_summarization.py
 
       - name: Install Render CLI
         run: |
@@ -64,15 +64,14 @@ jobs:
       
       - name: Get Latest MP3
         run: |
-          cd generated_audios
-          latest_mp3=$(ls -t *.mp3 | head -1)
+          cd generated_audio
+          latest_mp3=$(realpath $(ls -t *.mp3 | head -1))
           echo "Latest MP3 file: $latest_mp3"
           echo "LATEST_MP3=$latest_mp3" >> $GITHUB_ENV  # Set environment variable using environment file
 
 
       - name: Deploy Most Recent MP3 to Render
         run: |
-          # cd generated_audios
           render set --project $AUDIOS_PROJECT_ID --service $AUDIOS_SERVICE_ID
           echo "Latest MP3 file: $LATEST_MP3"
           render up "$LATEST_MP3"
@@ -81,8 +80,8 @@ jobs:
         run: |
           python get_newest_audio.py
 
-      - name: Deploy Website to Render
-        run: |
-          render set --project $SITE_PROJECT_ID --service $SITE_SERVICE_ID      
-          cd web_page
-          render up
+      # - name: Deploy Website to Render
+      #   run: |
+      #     render set --project $SITE_PROJECT_ID --service $SITE_SERVICE_ID      
+      #     cd web_page
+      #     render up
