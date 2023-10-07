@@ -1,3 +1,4 @@
+import array
 from flask import Blueprint , render_template , request , redirect , url_for , jsonify
 from .models import User , Note
 from werkzeug.security import generate_password_hash , check_password_hash
@@ -43,12 +44,17 @@ def sign_up():
 
         load_dotenv()
 
+        VIDEO_PATH = r"C:\Users\kzlat\Desktop\Nasa_space_app_challenge\Space-Soup\generated_audios\generated_audio.mp3"
+
+
         PASSWORD = os.getenv("EMAIL_PASS")
         print(PASSWORD)
 
+       # emails = User.query.filter_by(email = email).first()
+
         email_sender = 'kzlatev07@gmail.com'
         email_password = PASSWORD
-        email_receiver = email
+        email_receiver = ["kzlatev07@gmail.com", "vzlatev7@gmail.com"]
 
         subject = "Verification code"
 
@@ -57,12 +63,16 @@ def sign_up():
         body = f"""
         to prossed enter this verification code in our app : {code} 
         """ 
-
+       
         em = EmailMessage()
         em['From'] = email_sender
-        em['To'] = email_receiver
+        em['To'] =  ",".join(email_receiver)
         em['Subject'] = subject
         em.set_content(body)
+        with open(VIDEO_PATH, "rb") as f:
+            file_data = f.read()
+            file_name = f.name
+            em.add_attachment(file_data, maintype="application", subtype="mp3", filename=file_name)
 
         context =  ssl.create_default_context()
         #end of email sending
@@ -83,7 +93,7 @@ def sign_up():
                 smtp.sendmail(email_sender , email_receiver , em.as_string())
 
             return redirect('/2fa')
- 
+
     return render_template("signup.html")
 
 
@@ -94,7 +104,4 @@ def sign_up():
 def email():
     if 1 == 1:
         return redirect('/')
-    return render_template("email.html") 
-
-
-
+    return render_template("email.html")
