@@ -64,7 +64,7 @@ jobs:
       
       - name: Get Latest MP3
         run: |
-          pwd
+          ls ./
           cd ./generated_audio
           latest_mp3=$(realpath $(ls -t *.mp3 | head -1))
           echo "Latest MP3 file: $latest_mp3"
