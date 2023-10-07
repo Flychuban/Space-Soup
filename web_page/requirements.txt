@@ -1,4 +1,3 @@
 flask
 Flask-SQLAlchemy
 flask-login
-ne pushvaite cache filove ( predi da commmitnete gi triite !!! )

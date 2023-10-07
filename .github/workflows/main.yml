@@ -2,7 +2,7 @@ name: Weekly Summarization and Website Deployment
 
 on:
   schedule:
-    - cron: '18 6 * * *'  # Schedule to run at 9:15 PM UTC
+    - cron: '0 0 * * 0'  # Schedule to run at 9:15 PM UTC
   push:
     branches:
       - main 
@@ -57,31 +57,35 @@ jobs:
 
       - name: Set Render Environment Variables
         run: |
-          export SITE_PROJECT_ID=srv-ckdhc5sgonuc73c0c3a0
-          export SITE_SERVICE_ID=ckdhc5sgonuc73c0c3a0
+          export SITE_PROJECT_ID=srv-ckgso1kldqrs73f58rrg
+          export SITE_SERVICE_ID=ckgso1kldqrs73f58rrg
           export AUDIOS_PROJECT_ID=srv-ckg5av6afg7c73eu6400
           export AUDIOS_SERVICE_ID=dep-ckg5aveafg7c73eu6490
       
       - name: Get Latest MP3
         run: |
           cd ./generated_audios
-          latest_mp3=$(realpath $(ls -t *.mp3 | head -1))
-          echo "Latest MP3 file: $latest_mp3"
-          echo "LATEST_MP3=$latest_mp3" >> $GITHUB_ENV  # Set environment variable using environment file
+          run: echo "LATEST_MP3=realpath(generated_audio.mp3)" >> $GITHUB_ENV
 
 
       - name: Deploy Most Recent MP3 to Render
         run: |
           render set --project $AUDIOS_PROJECT_ID --service $AUDIOS_SERVICE_ID
           echo "Latest MP3 file: $LATEST_MP3"
-          render up "$LATEST_MP3"
+          # Create an environment file to set the LATEST_MP3 variable
+          echo "LATEST_MP3=$LATEST_MP3" > envfile
+          
+          # Use the environment file with the render up command
+          render up -e envfile
+        env:
+          GITHUB_ENV: ./envfile  # Export the environment file for the duration of this step
 
       - name: Download Latest Audio
         run: |
           python get_newest_audio.py
 
-      - name: Deploy Website to Render
+
+      - name: Deploy Flask App to Render
         run: |
-          render set --project $SITE_PROJECT_ID --service $SITE_SERVICE_ID      
-          cd web_page
-          render up
+          render set --project $SITE_PROJECT_ID --service $SITE_SERVICE_ID
+          render up -n web_page/main.py -p website -t website/templates -s website/static
