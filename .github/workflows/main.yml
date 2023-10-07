@@ -57,7 +57,7 @@ jobs:
 
       - name: Set Render Environment Variables
         run: |
-          export SITE_PROJECT_ID= srv-ckgso1kldqrs73f58rrg
+          export SITE_PROJECT_ID=srv-ckgso1kldqrs73f58rrg
           export SITE_SERVICE_ID=ckgso1kldqrs73f58rrg
           export AUDIOS_PROJECT_ID=srv-ckg5av6afg7c73eu6400
           export AUDIOS_SERVICE_ID=dep-ckg5aveafg7c73eu6490
