@@ -64,3 +64,27 @@ body {
     font-size: 9px;
     height: 13px;
 }
+
+.container{
+    position: absolute;
+    left: 40%;
+}
+
+#form{
+    width: 50vmin;
+    height: 45vmin;
+}
+
+.btn_btn-primary{
+    height: 6vmin;
+    font-size: large;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#username{
+    font-size: 2.5vmin;
+}
+#email{
+    font-size: 2.5vmin;
+}
