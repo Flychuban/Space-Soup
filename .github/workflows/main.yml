@@ -33,17 +33,17 @@ jobs:
       #   run: |
       #     pip install torch
 
-      # - name: Install TensorFlow
-      #   run: |
-      #     pip install tensorflow
+      - name: Install TensorFlow
+        run: |
+          pip install tensorflow
       
-      # - name: Install Keras
-      #   run: |
-      #     pip install keras
-      #     pip install --upgrade git+https://github.com/huggingface/transformers.git
+      - name: Install Keras
+        run: |
+          pip install keras
+          pip install --upgrade git+https://github.com/huggingface/transformers.git
 
-      # - name: Run summarization script
-      #   run: python news_summarization.py
+      - name: Run summarization script
+        run: python news_summarization.py
 
       - name: Install Render CLI
         run: |
@@ -64,7 +64,6 @@ jobs:
       
       - name: Get Latest MP3
         run: |
-          ls ./
           cd ./generated_audios
           latest_mp3=$(realpath $(ls -t *.mp3 | head -1))
           echo "Latest MP3 file: $latest_mp3"
@@ -81,8 +80,8 @@ jobs:
         run: |
           python get_newest_audio.py
 
-      # - name: Deploy Website to Render
-      #   run: |
-      #     render set --project $SITE_PROJECT_ID --service $SITE_SERVICE_ID      
-      #     cd web_page
-      #     render up
+      - name: Deploy Website to Render
+        run: |
+          render set --project $SITE_PROJECT_ID --service $SITE_SERVICE_ID      
+          cd web_page
+          render up
