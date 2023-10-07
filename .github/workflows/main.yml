@@ -65,7 +65,7 @@ jobs:
       - name: Get Latest MP3
         run: |
           ls ./
-          cd ./generated_audio
+          cd ./generated_audios
           latest_mp3=$(realpath $(ls -t *.mp3 | head -1))
           echo "Latest MP3 file: $latest_mp3"
           echo "LATEST_MP3=$latest_mp3" >> $GITHUB_ENV  # Set environment variable using environment file
