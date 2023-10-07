@@ -65,7 +65,7 @@ jobs:
       - name: Get Latest MP3
         run: |
           cd ./generated_audios
-          run: echo "LATEST_MP3=generated_audio.mp3" >> $GITHUB_ENV
+          run: echo "LATEST_MP3=realpath(generated_audio.mp3)" >> $GITHUB_ENV
 
 
       - name: Deploy Most Recent MP3 to Render
@@ -87,6 +87,5 @@ jobs:
 
       - name: Deploy Flask App to Render
         run: |
-          # Assuming your Flask app file is named app.py
           render set --project $SITE_PROJECT_ID --service $SITE_SERVICE_ID
-          render up -n your-flask-project/app.py -p website -t website/templates -s website/static
+          render up -n web_page/main.py -p website -t website/templates -s website/static
