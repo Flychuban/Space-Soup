@@ -29,9 +29,9 @@ jobs:
         run: |
           pip install -r requirements.txt  # Adjust as needed based on your project's requirements
 
-      - name: Install PyTorch
-        run: |
-          pip install torch
+      # - name: Install PyTorch
+      #   run: |
+      #     pip install torch
 
       - name: Install TensorFlow
         run: |
@@ -57,20 +57,24 @@ jobs:
 
       - name: Set Render Environment Variables
         run: |
-          export RENDER_PROJECT_ID=srv-ckdhc5sgonuc73c0c3a0
-          export RENDER_SERVICE_ID=ckdhc5sgonuc73c0c3a0
+          export SITE_PROJECT_ID=srv-ckdhc5sgonuc73c0c3a0
+          export SITE_SERVICE_ID=ckdhc5sgonuc73c0c3a0
+          export AUDIOS_PROJECT_ID=srv-ckg5av6afg7c73eu6400
+          export AUDIOS_SERVICE_ID=dep-ckg5aveafg7c73eu6490
       
       - name: Get Latest MP3
         run: |
-          cd generated_audios
-          latest_mp3=$(ls -t *.mp3 | head -1)
+          cd ./generated_audios
+          latest_mp3=$(realpath $(ls -t *.mp3 | head -1))
           echo "Latest MP3 file: $latest_mp3"
+          echo "LATEST_MP3=$latest_mp3" >> $GITHUB_ENV  # Set environment variable using environment file
+
 
       - name: Deploy Most Recent MP3 to Render
         run: |
-
-          render set --project $RENDER_PROJECT_ID --service $RENDER_SERVICE_ID
-          render up -f "$latest_mp3"
+          render set --project $AUDIOS_PROJECT_ID --service $AUDIOS_SERVICE_ID
+          echo "Latest MP3 file: $LATEST_MP3"
+          render up "$LATEST_MP3"
 
       - name: Download Latest Audio
         run: |
@@ -78,6 +82,6 @@ jobs:
 
       - name: Deploy Website to Render
         run: |
-          render set --project $RENDER_PROJECT_ID --service $RENDER_SERVICE_ID      
+          render set --project $SITE_PROJECT_ID --service $SITE_SERVICE_ID      
           cd web_page
           render up

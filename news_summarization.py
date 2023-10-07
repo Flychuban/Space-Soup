@@ -140,6 +140,7 @@ def make_mp3_text_to_speech(all_summarized_text, filename):
     audio = AudioSegment.from_mp3(filename)
     new_file = speedup(audio,1.2,150)
     new_file.export(filename, format="mp3")
+    print("Generated audio file")
 
 def main():
     # Load summarization model from HuggingFace
@@ -172,7 +173,7 @@ def main():
     all_summarized_texts = merge_texts_into_space_report(summarized_texts)
     
     # Text-to-speech for space report
-    filename = "generated_audios/space_news_summary_" + datetime.datetime.now().strftime("%Y%m%d") + ".mp3"
+    filename = "generated_audios/generated_audio.mp3"
     make_mp3_text_to_speech(all_summarized_texts, filename)
       
     

@@ -3,10 +3,10 @@ from bs4 import BeautifulSoup
 import re
 
 # Replace with your Render service details
-service_name = "space-soup"
+service_name = "generated-audio-files"
 
 # Define the base URL for your Render service
-base_url = f"https://{service_name}.onrender.com/"
+base_url = f"https://{service_name}.onrender.com/generated_audio.mp3"
 
 # Function to get the URL of the newest audio file
 def get_newest_audio_url():
@@ -53,5 +53,13 @@ def download_latest_audio():
     else:
         print("No audio files found.")
 
+def download_audio():
+    response = requests.get(base_url)
+    content = response.content
+    with open("generated_audios/generated_audio.mp3", "wb") as f:
+        f.write(content)
+    print("Downloaded the latest audio")
+
+
 # Call the function to download the latest audio
-download_latest_audio()
+download_audio()
