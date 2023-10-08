@@ -99,4 +99,5 @@ jobs:
         run: |
           render set --project $SITE_PROJECT_ID --service $SITE_SERVICE_ID      
           cd web_page
+          #Deploy the website
           render up
