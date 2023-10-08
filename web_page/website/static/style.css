@@ -1,90 +1,107 @@
-body {
-    background: linear-gradient(to right, #2a292c, #3d3e3e, #5f5f5f);
-    font-family: 'Poppins', sans-serif;
+.title{
+    position: absolute;
+    font-size: 8vmin;
+    left: 95vmin;
+    font-weight: bold;
+    font-style: italic;
+}
+
+
+
+.contact_form {
+    position: absolute;
+    top: 130%;
+    width: 100%;
+    height: 60%;
+    background-color: black;
+}
+
+.contact_text {
+    position: relative;
+    margin-top: 3vmin;
+    left: 90vmin;
+    font-size: 5vmin;
+    font-weight: bolder;
+    font-style: italic;
+    color: white;
     user-select: none;
 }
 
-#form {
-    width: 300px;
-    margin: 20vh auto 0 auto;
-    padding: 20px;
-    background-color: whitesmoke;
-    border-radius: 4px;
-    font-size: 12px;
+.hide {
+    display: none;
 }
 
-#form h1 {
-    color: #d32245;
-    text-align: center;
+header {
+    background-color: #333; /* Change to your desired background color /
+    color: #fff; / Change to your desired text color */
+    padding: 10px 0;
 }
 
-#form button {
-    padding: 10px;
-    margin-top: 10px;
-    width: 100%;
-    color: white;
-    background-color: #d32245;
-    border: none;
-    border-radius: 4px;
-}
-
-#form a {
-    color: #d32245;
-    margin-left: 5%;
-}
-
-.input-control {
+.navbar {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.input-control input {
-    border: 2px solid #f0f0f0;
-	border-radius: 4px;
-	display: block;
-	font-size: 12px;
-	padding: 10px;
-	width: 100%;
+.brand h1 {
+    margin: 0;
 }
 
-.input-control input:focus {
-    outline: 0;
+.nav-list ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
 }
 
-.input-control.success input {
-    border-color: #09c372;
+.nav-list li {
+    margin: 0 15px;
 }
 
-.input-control.error input {
-    border-color: #ff3860;
-}
-
-.input-control .error {
-    color: #ff3860;
-    font-size: 9px;
-    height: 13px;
-}
-
-.container{
-    position: absolute;
-    left: 40%;
-}
-
-#form{
-    width: 50vmin;
-    height: 45vmin;
-}
-
-.btn_btn-primary{
-    height: 6vmin;
-    font-size: large;
+.nav-list a {
+    text-decoration: none;
+    color: #fff;
     font-weight: bold;
-    cursor: pointer;
+    transition: color 0.3s ease;
 }
 
-#username{
-    font-size: 2.5vmin;
+.nav-list a:hover {
+    color: #ff5733; /* Change to your desired hover color */
 }
-#email{
-    font-size: 2.5vmin;
+
+/* Hamburger menu (for mobile or smaller screens) /
+.hamburger {
+    display: none; / Hide by default on larger screens
+    cursor: pointer;
+}*/
+
+@media screen and (max-width: 768px) {
+    .hamburger {
+        display: block; /* Show on smaller screens */
+    }
+
+    .nav-list ul {
+        flex-direction: column;
+        align-items: flex-start;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        background-color: #333; /* Change to your desired background color /
+        padding: 10px;
+        width: 100%;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+        display: none; / Hide by default on smaller screens */
+    }
+
+    .nav-list.active ul {
+        display: flex; /* Show when the menu is active */
+    }
+
+    .nav-list li {
+        margin: 10px 0;
+    }
 }
+
+.audio-container {
+    position: absolute;
+    margin-top: 10vmin;
+  }
