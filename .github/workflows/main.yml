@@ -65,7 +65,7 @@ jobs:
       - name: Get Latest MP3
         run: |
           cd ./generated_audios
-          latest_mp3_path ="generated_audio.mp3"
+          latest_mp3_path="generated_audio.mp3"
           latest_mp3=$(realpath "$latest_mp3_path")
           echo "Latest MP3 file: $latest_mp3"
           echo "LATEST_MP3=$latest_mp3" >> $GITHUB_ENV
