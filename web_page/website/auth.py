@@ -44,13 +44,12 @@ def sign_up():
 
         load_dotenv()
 
-        VIDEO_PATH = r"C:\Users\kzlat\Desktop\Nasa_space_app_challenge\Space-Soup\generated_audios\generated_audio.mp3"
+       # VIDEO_PATH = r"C:\Users\kzlat\Desktop\Nasa_space_app_challenge\Space-Soup\generated_audios\generated_audio.mp3"
 
 
         PASSWORD = os.getenv("EMAIL_PASS")
         print(PASSWORD)
 
-       # emails = User.query.filter_by(email = email).first()
 
         email_sender = 'kzlatev07@gmail.com'
         email_password = PASSWORD
@@ -61,7 +60,7 @@ def sign_up():
         global code
 
         body = f"""
-        to prossed enter this verification code in our app : {code} 
+        Hi, we are sending you this week's new recording:
         """ 
        
         em = EmailMessage()
@@ -69,10 +68,10 @@ def sign_up():
         em['To'] =  ",".join(email_receiver)
         em['Subject'] = subject
         em.set_content(body)
-        with open(VIDEO_PATH, "rb") as f:
-            file_data = f.read()
-            file_name = f.name
-            em.add_attachment(file_data, maintype="application", subtype="mp3", filename=file_name)
+        #with open(VIDEO_PATH, "rb") as f:
+         #   file_data = f.read()
+          #  file_name = f.name
+           # em.add_attachment(file_data, maintype="application", subtype="mp3", filename=file_name)
 
         context =  ssl.create_default_context()
         #end of email sending
